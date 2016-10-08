@@ -4,12 +4,14 @@ import { HeroList } from '../components';
 
 export default React.createClass({
   render() {
+    const { searchText } = this.state;
     return (
       <div>
         <Layout fixedHeader>
           <Header title="Marvel HEROeS">
             <Textfield
-              value=""
+              value={searchText}
+              onChange={this.handleSearchTextChange}
               label="Search"
               expandable
               expandableIcon="search"
@@ -26,5 +28,16 @@ export default React.createClass({
         </Layout>
       </div>
     );
+  },
+
+  getInitialState() {
+    return {
+      searchText: '',
+    };
+  },
+
+  handleSearchTextChange(event) {
+    const searchText = event.target.value;
+    this.setState({ searchText });
   },
 });
