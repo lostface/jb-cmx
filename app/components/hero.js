@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, CardTitle, CardActions, Button } from 'react-mdl';
 
-export default function(props) {
+export default function Hero(props) {
   const { id, name, thumbnail } = props;
 
   return (
@@ -15,3 +15,9 @@ export default function(props) {
     </Card>
   );
 }
+
+Hero.propTypes = {
+  id: React.PropTypes.number.isRequired,
+  name: React.PropTypes.string.isRequired,
+  thumbnail: React.PropTypes.string.isRequired,
+};
