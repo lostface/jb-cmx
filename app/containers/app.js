@@ -48,6 +48,9 @@ export default React.createClass({
   },
 
   search(searchText) {
+    // TODO empty search not supported yet
+    if (searchText === '') { return; }
+
     // TODO error handling
     searchHeroes(searchText)
       .then(heroes => this.setState({ heroes }));
