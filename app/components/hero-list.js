@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { Grid, Cell } from 'react-mdl';
 import Hero from './hero';
 
-export default function(props) {
+export default function HeroList(props) {
   const { heroes } = props;
 
   return (
@@ -22,3 +22,14 @@ export default function(props) {
     );
   }
 }
+
+HeroList.propTypes = {
+  heroes: React.PropTypes.arrayOf(
+    // TODO shape is same as in hero can be extracted
+    React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      name: React.PropTypes.string.isRequired,
+      thumbnail: React.PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
