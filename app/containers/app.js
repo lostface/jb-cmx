@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
+import { HeroList } from '../components';
 
 export default React.createClass({
   render() {
@@ -19,7 +20,9 @@ export default React.createClass({
               <p>About</p>
             </Navigation>
           </Drawer>
-          <Content/>
+          <Content>
+            <HeroList />
+          </Content>
         </Layout>
       </div>
     );
