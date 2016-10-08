@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
 import { HeroList } from '../components';
+import { searchHeroes } from '../services';
 
+const KEY_CODE_ENTER = 13;
 const KEY_CODE_ESCAPE = 27;
 
 export default React.createClass({
   render() {
-    const { searchText } = this.state;
+    const { searchText, heroes } = this.state;
+
     return (
       <div>
         <Layout fixedHeader>
@@ -26,7 +29,7 @@ export default React.createClass({
             </Navigation>
           </Drawer>
           <Content>
-            <HeroList />
+            <HeroList heroes={heroes} />
           </Content>
         </Layout>
       </div>
@@ -36,11 +39,18 @@ export default React.createClass({
   getInitialState() {
     return {
       searchText: '',
+      heroes: [],
     };
   },
 
   clearSearchText() {
     this.setState({ searchText: '' });
+  },
+
+  search(searchText) {
+    // TODO error handling
+    searchHeroes(searchText)
+      .then(heroes => this.setState({ heroes }));
   },
 
   handleSearchTextChange(event) {
@@ -53,6 +63,8 @@ export default React.createClass({
 
     if (keyCode === KEY_CODE_ESCAPE) {
       this.clearSearchText();
+    } else if (keyCode === KEY_CODE_ENTER) {
+      this.search(this.state.searchText);
     }
   }
 });
