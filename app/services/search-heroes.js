@@ -11,7 +11,9 @@ export default function searchHeroes(searchText) {
   // TODO temporary solution, should be removed !!
   const ts = String(Date.now());
   const hash = md5(ts + MARVEL_API_PRIVATE_KEY + MARVEL_API_PUBLIC_KEY);
-  const url = `${MARVEL_API_CHARACTERS_URL}?nameStartsWith=${searchText}&ts=${ts}&hash=${hash}&apikey=${MARVEL_API_PUBLIC_KEY}`;
+  const url = encodeURI(
+    `${MARVEL_API_CHARACTERS_URL}?nameStartsWith=${searchText}&ts=${ts}&hash=${hash}&apikey=${MARVEL_API_PUBLIC_KEY}`
+  );
 
   return fetch(url)
     .then(response => response.json())
