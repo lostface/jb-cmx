@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import App from './containers/app';
 
 ReactDOM.render(
-  <p>Hello There</p>,
+  <App />,
   document.getElementById('container')
 );
