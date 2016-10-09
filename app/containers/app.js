@@ -29,7 +29,7 @@ export default React.createClass({
             </Navigation>
           </Drawer>
           <Content>
-            <HeroList heroes={heroes} />
+            <HeroList heroes={heroes} onHeroWantMoreClick={this.handleHeroWantMoreClick} />
           </Content>
         </Layout>
       </div>
@@ -69,5 +69,9 @@ export default React.createClass({
     } else if (keyCode === KEY_CODE_ENTER) {
       this.search(this.state.searchText);
     }
+  },
+
+  handleHeroWantMoreClick(heroId) {
+    // TODO;
   }
 });

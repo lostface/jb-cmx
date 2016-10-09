@@ -4,7 +4,7 @@ import { Grid, Cell } from 'react-mdl';
 import Hero from './hero';
 
 export default function HeroList(props) {
-  const { heroes } = props;
+  const { heroes, onHeroWantMoreClick } = props;
 
   return (
     <div style={{width: '90%', margin: 'auto'}}>
@@ -17,7 +17,7 @@ export default function HeroList(props) {
   function createHeroNode(hero) {
     return (
       <Cell key={hero.id} col={4} phone={3} tablet={4} align="middle">
-        <Hero {...hero} />
+        <Hero {...hero} onWantMoreClick={onHeroWantMoreClick} />
       </Cell>
     );
   }
@@ -32,4 +32,5 @@ HeroList.propTypes = {
       thumbnail: React.PropTypes.string.isRequired,
     })
   ).isRequired,
+  onHeroWantMoreClick: React.PropTypes.func,
 };
