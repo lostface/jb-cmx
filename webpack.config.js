@@ -5,7 +5,7 @@ const outdir = './dist';
 module.exports = {
   entry: {
     app: './app/index.js',
-    libs: ['react', 'react-dom', 'react-mdl', 'ramda', 'isomorphic-fetch'],
+    libs: ['react', 'react-dom', 'react-mdl', 'ramda', 'isomorphic-fetch', 'd3-shape'],
   },
 
   output: {
