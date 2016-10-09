@@ -8,6 +8,8 @@ module.exports = {
     libs: ['react', 'react-dom', 'react-mdl', 'ramda', 'isomorphic-fetch', 'd3-shape'],
   },
 
+  cache: false,
+
   output: {
     filename: path.join(outdir, 'app.bundle.js'),
   },
