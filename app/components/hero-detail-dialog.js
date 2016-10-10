@@ -58,7 +58,7 @@ export default React.createClass({
       || hero.series.available > 0;
 
     return (
-      <div>
+      <div id="hero-detail-dialog-container">
         <Dialog open={show} onCancel={onCloseTrigger} onClick={this.handleClick} style={{width: '40%'}} >
           <DialogTitle
               style={{
@@ -89,6 +89,11 @@ export default React.createClass({
 
   shouldComponentUpdate(nextProps) {
     return nextProps.show !== this.props.show;
+  },
+
+  componentDidMount() {
+    const dialog = document.querySelector('#hero-detail-dialog-container > dialog');
+    dialogPolyfill.registerDialog(dialog);
   },
 
   handleClick(event) {
