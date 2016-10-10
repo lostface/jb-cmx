@@ -3,3 +3,4 @@ export { default as HeroList } from './hero-list';
 export { default as HeroStatsChart } from './hero-stats-chart';
 export { default as HeroLinks } from './hero-links';
 export { default as HeroDetailDialog } from './hero-detail-dialog';
+export { default as SearchField } from './search-field';

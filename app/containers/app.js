@@ -1,28 +1,18 @@
 import * as React from 'react';
 import * as R from 'ramda';
-import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
-import { HeroList, HeroDetailDialog } from '../components';
+import { Layout, Header, Drawer, Navigation, Content } from 'react-mdl';
+import { HeroList, HeroDetailDialog, SearchField } from '../components';
 import { searchHeroes } from '../services';
-
-const KEY_CODE_ENTER = 13;
-const KEY_CODE_ESCAPE = 27;
 
 export default React.createClass({
   render() {
-    const { searchText, heroes, showHeroDetailDialog, selectedHero } = this.state;
+    const { heroes, showHeroDetailDialog, selectedHero } = this.state;
 
     return (
       <div>
         <Layout fixedHeader>
           <Header title="Marvel HEROeS">
-            <Textfield
-              value={searchText}
-              onChange={this.handleSearchTextChange}
-              onKeyDown={this.handleSearchTextKeyDown}
-              label="Search"
-              expandable
-              expandableIcon="search"
-            />
+            <SearchField onSearchTrigger={this.search} />
           </Header>
           <Drawer title="Menu">
             <Navigation>
@@ -43,15 +33,10 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      searchText: '',
       heroes: [],
       showHeroDetailDialog: false,
       selectedHero: undefined,
     };
-  },
-
-  clearSearchText() {
-    this.setState({ searchText: '' });
   },
 
   search(searchText) {
@@ -80,21 +65,6 @@ export default React.createClass({
       selectedHero: undefined,
       showHeroDetailDialog: false,
     });
-  },
-
-  handleSearchTextChange(event) {
-    const searchText = event.target.value;
-    this.setState({ searchText });
-  },
-
-  handleSearchTextKeyDown(event) {
-    const { keyCode } = event;
-
-    if (keyCode === KEY_CODE_ESCAPE) {
-      this.clearSearchText();
-    } else if (keyCode === KEY_CODE_ENTER) {
-      this.search(this.state.searchText);
-    }
   },
 
   handleHeroWantMoreClick(heroId) {
