@@ -24,3 +24,9 @@ Hero.propTypes = {
   thumbnail: React.PropTypes.string.isRequired,
   onWantMoreClick: React.PropTypes.func,
 };
+
+Hero.defaultProps = {
+  id: -1,
+  name: '',
+  thumbnail: '',
+};
