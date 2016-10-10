@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as d3 from 'd3-shape';
-import * as R from 'ramda';
 
 const ARC_COLORS = ['#1f77b4', '#ff7f0e', '#9467bd', '#2ca02c'];
+const CANVAS_WIDTH = 300;
+const CANVAS_HEIGHT = CANVAS_WIDTH;
 
 export default React.createClass({
   propTypes: {
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
     hero: React.PropTypes.shape({
       id: React.PropTypes.number,
       comics: React.PropTypes.shape({
@@ -26,14 +25,12 @@ export default React.createClass({
   },
 
   render() {
-    const { width, height } = this.props;
-
     return (
       <div style={{ margin: 'auto' }}>
         <canvas
           id="hero-stats-chart"
-          width={width}
-          height={height}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
           ref={canvas => { this.canvas = canvas; }}
         >No Canvas</canvas>
       </div>
@@ -45,33 +42,13 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const canvas = this.canvas;
-    const context = canvas.getContext('2d');
-    this.cvTranslateX = canvas.width / 2;
-    this.cvTranslateY = canvas.height / 2;
-
-    context.translate(this.cvTranslateX, this.cvTranslateY);
+    const chartData = getPieData(this.props.hero);
+    drawChart(this.canvas, chartData);
   },
 
   componentWillReceiveProps(nextProps) {
-    const canvas = this.canvas;
-    const context = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-    const radius = Math.min(width, height) / 2;
-
-    context.clearRect(-this.cvTranslateX, -this.cvTranslateY, width, height);
-
-    // TODO draw only if nextProps.hero changed
-
-    const hero = nextProps.hero;
-    if (R.isEmpty(hero)) {
-      return;
-    }
-
-    const data = getPieData(hero);
-    const arcs = drawArcs(context, radius, data);
-    drawLabels(context, radius, arcs);
+    const chartData = getPieData(nextProps.hero);
+    drawChart(this.canvas, chartData);
   },
 });
 
@@ -82,6 +59,26 @@ function getPieData(hero) {
     { label: 'Events', count: hero.events.available },
     { label: 'Series', count: hero.series.available },
   ];
+}
+
+function drawChart(canvas, data) {
+  const context = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+  const translateX = width / 2;
+  const translateY = height / 2;
+  const radius = Math.min(width, height) / 2;
+
+  resetContext(context, width, height);
+  context.translate(translateX, translateY);
+
+  const arcs = drawArcs(context, radius, data);
+  drawLabels(context, radius, arcs);
+}
+
+function resetContext(context, width, height) {
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.clearRect(0, 0, width, height);
 }
 
 function drawArcs(context, radius, data) {
