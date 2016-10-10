@@ -24,6 +24,16 @@ export default React.createClass({
     })
   },
 
+  getDefaultProps() {
+    return {
+      id: -1,
+      comics: { available: 0 },
+      stories: { available: 0 },
+      events: { available: 0 },
+      series: { available: 0 },
+    };
+  },
+
   render() {
     return (
       <div style={{ margin: 'auto' }}>
