@@ -55,6 +55,12 @@ HeroDetailDialog.propTypes = {
     name: React.PropTypes.string.isRequired,
     description: React.PropTypes.string.isRequired,
     thumbnail: React.PropTypes.string.isRequired,
+    urls: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        type: React.PropTypes.string.isRequired,
+        url: React.PropTypes.string.isRequired,
+      })
+    ),
     comics: React.PropTypes.shape({
       available: React.PropTypes.number.isRequired
     }),
@@ -69,4 +75,19 @@ HeroDetailDialog.propTypes = {
     }),
   }),
   onCloseTrigger: React.PropTypes.func,
+};
+
+HeroDetailDialog.defaultProps = {
+  show: false,
+  hero: {
+    id: -1,
+    name: '',
+    description: '',
+    thumbnail: '',
+    urls: [],
+    comics: { available: 0 },
+    stories: { available: 0 },
+    events: { available: 0 },
+    series: { available: 0 },
+  },
 };
