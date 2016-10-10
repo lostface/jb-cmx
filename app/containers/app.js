@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as R from 'ramda';
-import { Layout, Header, Drawer, Navigation, Content } from 'react-mdl';
+import { Spinner, Layout, Header, Drawer, Navigation, Content } from 'react-mdl';
 import { HeroList, HeroDetailDialog, SearchField } from '../components';
 import { searchHeroes } from '../services';
 
 export default React.createClass({
   render() {
-    const { heroes, showHeroDetailDialog, selectedHero } = this.state;
+    const { heroes, showHeroDetailDialog, selectedHero, showSpinner } = this.state;
 
     return (
       <div>
@@ -20,6 +20,7 @@ export default React.createClass({
             </Navigation>
           </Drawer>
           <Content>
+            { showSpinner ? <Spinner style={{ position: 'absolute', top: '12px', left: '97%'}} /> : null }
             <HeroList heroes={heroes} onHeroWantMoreClick={this.handleHeroWantMoreClick} />
           </Content>
         </Layout>
@@ -36,6 +37,7 @@ export default React.createClass({
       heroes: [],
       showHeroDetailDialog: false,
       selectedHero: undefined,
+      showSpinner: false,
     };
   },
 
@@ -43,9 +45,21 @@ export default React.createClass({
     // TODO empty search not supported yet
     if (searchText === '') { return; }
 
+    this.showSpinner();
+    const hideSpinner = () => { this.hideSpinner(); };
+
     // TODO error handling
     searchHeroes(searchText)
-      .then(heroes => this.setState({ heroes }));
+      .then(heroes => this.setState({ heroes }))
+      .then(hideSpinner, hideSpinner);
+  },
+
+  showSpinner() {
+    this.setState({ showSpinner: true });
+  },
+
+  hideSpinner() {
+    this.setState({ showSpinner: false });
   },
 
   findHeroById(id) {
