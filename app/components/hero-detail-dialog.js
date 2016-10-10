@@ -73,7 +73,7 @@ export default React.createClass({
             <p>{hero.description}</p>
 
             <h4>Links</h4>
-            <HeroLinks hero={hero} />
+            <HeroLinks heroUrls={hero.urls} />
 
             <h4>Stats</h4>
             { statsAvailable ? <HeroStatsChart hero={hero} /> : null }

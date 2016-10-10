@@ -3,11 +3,11 @@ import * as R from 'ramda';
 import { Button } from 'react-mdl';
 
 export default function HeroLinks(props) {
-  const { hero } = props;
+  const { heroUrls } = props;
 
   return (
     <div>
-      {R.map(createLinkNode, hero.urls)}
+      { R.map(createLinkNode, heroUrls) }
     </div>
   );
 
@@ -25,13 +25,14 @@ export default function HeroLinks(props) {
 }
 
 HeroLinks.propTypes = {
-  hero: React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
-    urls: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        type: React.PropTypes.string.isRequired,
-        url: React.PropTypes.string.isRequired,
-      })
-    ),
-  }),
+  heroUrls: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      type: React.PropTypes.string.isRequired,
+      url: React.PropTypes.string.isRequired,
+    })
+  ),
+};
+
+HeroLinks.defaultProps = {
+  heroUrls: [],
 };
