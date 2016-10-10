@@ -34,3 +34,7 @@ HeroList.propTypes = {
   ).isRequired,
   onHeroWantMoreClick: React.PropTypes.func,
 };
+
+HeroList.defaultProps = {
+  heroes: [],
+};
