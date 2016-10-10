@@ -20,7 +20,7 @@ export default React.createClass({
             </Navigation>
           </Drawer>
           <Content>
-            { showSpinner ? <Spinner style={{ position: 'absolute', top: '12px', left: '97%'}} /> : null }
+            { showSpinner ? <Spinner style={{ position: 'fixed', top: '77px', left: '97%'}} /> : null }
             <HeroList heroes={heroes} onHeroWantMoreClick={this.handleHeroWantMoreClick} />
           </Content>
         </Layout>
