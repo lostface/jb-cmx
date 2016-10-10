@@ -1,6 +1,7 @@
 import * as React from 'react';
+import * as R from 'ramda';
 import { Layout, Header, Textfield, Drawer, Navigation, Content } from 'react-mdl';
-import { HeroList } from '../components';
+import { HeroList, HeroDetailDialog } from '../components';
 import { searchHeroes } from '../services';
 
 const KEY_CODE_ENTER = 13;
@@ -8,7 +9,7 @@ const KEY_CODE_ESCAPE = 27;
 
 export default React.createClass({
   render() {
-    const { searchText, heroes } = this.state;
+    const { searchText, heroes, showHeroDetailDialog, selectedHero } = this.state;
 
     return (
       <div>
@@ -32,6 +33,10 @@ export default React.createClass({
             <HeroList heroes={heroes} onHeroWantMoreClick={this.handleHeroWantMoreClick} />
           </Content>
         </Layout>
+        <HeroDetailDialog
+          show={showHeroDetailDialog}
+          hero={selectedHero}
+          onCloseTrigger={this.closeHeroDetailDialog} />
       </div>
     );
   },
@@ -40,6 +45,8 @@ export default React.createClass({
     return {
       searchText: '',
       heroes: [],
+      showHeroDetailDialog: false,
+      selectedHero: undefined,
     };
   },
 
@@ -54,6 +61,25 @@ export default React.createClass({
     // TODO error handling
     searchHeroes(searchText)
       .then(heroes => this.setState({ heroes }));
+  },
+
+  findHeroById(id) {
+    const findHeroWithId = R.find(R.propEq('id', id));
+    return findHeroWithId(this.state.heroes);
+  },
+
+  showHeroDetailDialog(hero) {
+    this.setState({
+      selectedHero: hero,
+      showHeroDetailDialog: true,
+    });
+  },
+
+  closeHeroDetailDialog() {
+    this.setState({
+      selectedHero: undefined,
+      showHeroDetailDialog: false,
+    });
   },
 
   handleSearchTextChange(event) {
@@ -72,6 +98,7 @@ export default React.createClass({
   },
 
   handleHeroWantMoreClick(heroId) {
-    // TODO;
-  }
+    const hero = this.findHeroById(heroId);
+    this.showHeroDetailDialog(hero);
+  },
 });
